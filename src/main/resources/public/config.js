@@ -27,6 +27,8 @@ System.config({
     "aurelia-router": "npm:aurelia-router@1.2.1",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
+    "bluebird": "npm:bluebird@3.4.7",
+    "bootstrap": "github:twbs/bootstrap@3.3.7",
     "core-js": "npm:core-js@1.2.7",
     "font-awesome": "npm:font-awesome@4.7.0",
     "moment": "npm:moment@2.17.1",
@@ -100,6 +102,9 @@ System.config({
       "aurelia-templating-resources": "npm:aurelia-templating-resources@1.3.1",
       "tether": "npm:tether@1.4.0",
       "velocity-animate": "npm:velocity-animate@1.4.3"
+    },
+    "github:twbs/bootstrap@3.3.7": {
+      "jquery": "npm:jquery@3.1.1"
     },
     "npm:asn1.js@4.9.1": {
       "bn.js": "npm:bn.js@4.11.6",
@@ -230,6 +235,9 @@ System.config({
       "aurelia-task-queue": "npm:aurelia-task-queue@1.2.0"
     },
     "npm:babel-runtime@5.8.38": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:bluebird@3.4.7": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:bn.js@4.11.6": {

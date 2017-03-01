@@ -3,17 +3,27 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link type="text/css" rel="stylesheet" th:href="@{/jspm_packages/github/necolas/normalize.css@5.0.0/normalize.css}"/>
-
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-
+        <link type="text/css" rel="stylesheet" th:href="@{/jspm_packages/github/twbs/bootstrap@3.3.7/css/bootstrap.min.css">
         <link type="text/css" rel="stylesheet" th:href="@{/jspm_packages/npm/font-awesome@4.7.0/css/font-awesome.css}"/>
         <link type="text/css" rel="stylesheet" th:href="@{/css/main.css}"/>
     </head>
 
     <body aurelia-app="aurelia_src/main">
+        <div class="splash">
+            <div class="message">Spring Boot Aurelia Bootstrap</div>
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+
+        <!-- The bluebird version is locked at 4.6.3 in the package.json file to keep this from breaking -->
+        <!-- We include bluebird to bypass Edge's very slow Native Promise implementation. The Edge team -->
+        <!-- has fixed the issues with their implementation with these fixes being distributed with the  -->
+        <!-- Windows 10 Anniversary Update on 2 August 2016. Once that update has pushed out, you may    -->
+        <!-- consider removing bluebird from your project and simply using native promises if you do     -->
+        <!-- not need to support Internet Explorer.                                                      -->
+        <script th:src="@{jspm_packages/npm/bluebird@3.4.7/js/browser/bluebird.min.js}"></script>
         <script th:src="@{jspm_packages/system.js}"></script>
         <script th:src="@{config.js}"></script>
         <script>

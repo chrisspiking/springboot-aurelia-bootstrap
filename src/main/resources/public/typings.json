@@ -11,9 +11,18 @@
     "selenium-webdriver": "registry:dt/selenium-webdriver#2.53.1+20160914235635"
   },
   "dependencies": {
+    "aurelia-binding": "github:aurelia/binding",
+    "aurelia-dependency-injection": "github:aurelia/dependency-injection",
     "aurelia-event-aggregator": "github:aurelia/event-aggregator",
     "aurelia-framework": "github:aurelia/framework",
+    "aurelia-loader": "github:aurelia/loader",
+    "aurelia-logging": "github:aurelia/logging",
+    "aurelia-metadata": "github:aurelia/metadata",
+    "aurelia-pal": "github:aurelia/pal",
+    "aurelia-path": "github:aurelia/path",
     "aurelia-router": "github:aurelia/router",
+    "aurelia-task-queue": "github:aurelia/task-queue",
+    "aurelia-templating": "github:aurelia/templating",
     "debug": "registry:dt/debug#0.0.0+20160620211513"
   }
 }
