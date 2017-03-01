@@ -1,0 +1,19 @@
+{
+  "globalDependencies": {
+    "moment": "registry:dt/moment#2.11.1+20161010105546",
+    "moment-timezone": "registry:dt/moment-timezone#0.2.5+20161208060822",
+    "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20161120230953"
+  },
+  "globalDevDependencies": {
+    "angular-protractor": "registry:dt/angular-protractor#1.5.0+20161101133457",
+    "es6-shim": "registry:dt/es6-shim#0.31.2+20160726072212",
+    "jasmine": "registry:dt/jasmine#2.5.0+20170207112528",
+    "selenium-webdriver": "registry:dt/selenium-webdriver#2.53.1+20160914235635"
+  },
+  "dependencies": {
+    "aurelia-event-aggregator": "github:aurelia/event-aggregator",
+    "aurelia-framework": "github:aurelia/framework",
+    "aurelia-router": "github:aurelia/router",
+    "debug": "registry:dt/debug#0.0.0+20160620211513"
+  }
+}

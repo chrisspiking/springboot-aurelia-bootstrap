@@ -1,0 +1,14 @@
+// Please change and rename to settings.groovy for running test cases.
+
+skipGeb=false;
+
+// headless, firefox, firefoxLegacy or chrome. (defaults to headless)
+//browserType="chrome"
+//browserType="firefox"
+//browserType="firefoxLegacy"
+browserType="headless"
+
+phantomjsPath = "/Users/username/work/apps/webdrivers/phantomjs-2.1.1/bin/phantomjs"
+geckoDriverPath = "/Users/username/work/apps/webdrivers/geckodriver-0.14.0/geckodriver"
+chromeDriverPath = "/Users/username/work/apps/webdrivers/chromedriver-2.27.0/chromedriver"
+

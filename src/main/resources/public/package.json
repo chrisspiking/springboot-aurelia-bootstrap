@@ -1,0 +1,29 @@
+{
+  "name": "springboot-aurelia-bootstrap",
+  "version": "1.0.0",
+  "description": "springboot-aurelia-bootstrap",
+  "author": "Chris Spiking",
+  "license": "MIT",
+  "preferGlobal": false,
+  "private": false,
+  "jspm": {
+    "dependencies": {
+      "aurelia-bootstrap": "github:tochoromero/aurelia-bootstrap@^0.1.16",
+      "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^2.0.1",
+      "aurelia-event-aggregator": "npm:aurelia-event-aggregator@^1.0.1",
+      "aurelia-framework": "npm:aurelia-framework@1.1.0",
+      "aurelia-pal-browser": "npm:aurelia-pal-browser@^1.1.0",
+      "aurelia-router": "npm:aurelia-router@^1.2.1",
+      "font-awesome": "npm:font-awesome@4.7.0",
+      "moment": "npm:moment@2.17.1",
+      "moment-timezone": "npm:moment-timezone@0.5.11",
+      "normalize.css": "github:necolas/normalize.css@5.0.0"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4",
+      "typescript": "npm:typescript@2.2.1"
+    }
+  }
+}
