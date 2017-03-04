@@ -1,7 +1,11 @@
-# Project Title
+# Spring Boot Aurelia Skeleton
 
 This project is to be used as a skeleton for those that wish to create a Spring Boot application utilising Spring Security
 and have the frontend implemented using Aurelia framework (www.aurelia.io).
+
+Currently this skeleton isn't set up for things coming later like Aurelia bundling (when I get annoyed at page load times) 
+and other things like SCSS, simple user registration/management/etc. Anything I can think of really to build this out to be a 
+reusable starting block for people.
 
 ## Getting Started
 
