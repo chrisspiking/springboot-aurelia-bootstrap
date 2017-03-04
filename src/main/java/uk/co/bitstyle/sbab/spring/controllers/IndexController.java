@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author cspiking
  */
 @Controller
-public class Main {
+public class IndexController {
 
     @RequestMapping(value={"/", "index"})
     public String index() {

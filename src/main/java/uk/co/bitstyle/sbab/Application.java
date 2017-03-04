@@ -1,4 +1,4 @@
-package uk.co.bitstyle.sbab.spring;
+package uk.co.bitstyle.sbab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
