@@ -1,4 +1,4 @@
-package uk.co.bitstyle.sbab.controllers;
+package uk.co.bitstyle.sbab.spring.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

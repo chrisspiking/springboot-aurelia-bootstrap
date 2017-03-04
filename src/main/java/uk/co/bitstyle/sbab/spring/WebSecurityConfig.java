@@ -1,4 +1,4 @@
-package uk.co.bitstyle.sbab;
+package uk.co.bitstyle.sbab.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -13,16 +13,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers("/s/**").authenticated()
-                .antMatchers("/**").permitAll()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+            .authorizeRequests()
+            .antMatchers("/s/**").authenticated()
+            .antMatchers("/**").permitAll()
+            .and()
+            .formLogin()
+            .loginPage("/login")
+            .permitAll()
+            .and()
+            .logout()
+            .permitAll();
 
         http.headers().cacheControl().disable();
     }
