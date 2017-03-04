@@ -1,0 +1,19 @@
+# Running profile for Beans
+spring:
+
+  profiles:
+    active: development
+
+  application:
+    name: springboot-aurelia-bootstrap
+
+
+# Web Server Config
+server:
+
+  forceSslRedirect: false
+  port: 8443
+
+application:
+
+  useDatabase: false

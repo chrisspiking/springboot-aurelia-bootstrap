@@ -1,8 +1,12 @@
 package uk.co.bitstyle.sbab.spring.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import uk.co.bitstyle.sbab.spring.dao.SimpleDao;
 
 /**
  * Main controller rgistering handlers for index and then default any other html file name.
@@ -12,9 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
+    @Autowired
+    private SimpleDao simpleDao;
+
     @RequestMapping(value={"/", "index"})
     public String index() {
         return "index";
+    }
+
+    @RequestMapping("springDbPropsTest")
+    @ResponseStatus(HttpStatus.OK)
+    public void springTest() {
+        simpleDao.doSomething();
     }
 
     @RequestMapping("/src/{htmlFileName}.html")

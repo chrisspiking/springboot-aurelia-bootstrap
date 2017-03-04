@@ -1,4 +1,4 @@
-package uk.co.bitstyle.sbab.spring;
+package uk.co.bitstyle.sbab.spring.config;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
