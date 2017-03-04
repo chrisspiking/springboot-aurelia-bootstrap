@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import uk.co.bitstyle.sbab.spring.dao.SimpleDao;
+import uk.co.bitstyle.sbab.spring.config.dao.silliness.SillyDao;
 
 /**
  * Main controller rgistering handlers for index and then default any other html file name.
@@ -17,7 +17,7 @@ import uk.co.bitstyle.sbab.spring.dao.SimpleDao;
 public class IndexController {
 
     @Autowired
-    private SimpleDao simpleDao;
+    private SillyDao simpleDao;
 
     @RequestMapping(value={"/", "index"})
     public String index() {

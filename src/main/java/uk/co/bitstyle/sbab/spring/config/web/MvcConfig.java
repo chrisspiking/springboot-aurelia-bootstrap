@@ -1,4 +1,4 @@
-package uk.co.bitstyle.sbab.spring.config;
+package uk.co.bitstyle.sbab.spring.config.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
