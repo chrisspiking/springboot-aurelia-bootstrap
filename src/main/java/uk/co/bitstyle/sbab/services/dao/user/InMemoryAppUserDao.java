@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import uk.co.bitstyle.sbab.model.AppUser;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -22,6 +24,11 @@ public class InMemoryAppUserDao implements AppUserDao {
 
     public InMemoryAppUserDao(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public Collection<AppUser> getAllUsers() {
+        return new ArrayList<>(appUserDetailsMap.values());
     }
 
     @Override
