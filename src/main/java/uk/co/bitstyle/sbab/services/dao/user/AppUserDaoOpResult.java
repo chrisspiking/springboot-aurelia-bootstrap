@@ -1,4 +1,4 @@
-package uk.co.bitstyle.sbab.services.dao;
+package uk.co.bitstyle.sbab.services.dao.user;
 
 /**
  * @author cspiking

@@ -50,7 +50,7 @@ dependencies {
 
     // Application things
 
-
+    compile 'com.zaxxer:HikariCP:2.6.0'
 
     // Spock
 

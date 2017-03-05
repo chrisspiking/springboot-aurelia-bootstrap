@@ -57,10 +57,6 @@ public class AppUser extends User {
         return super.getPassword() == null || super.getPassword().length() == 0;
     }
 
-    public void clearPassword() {
-        super.eraseCredentials();
-    }
-
     public AppUser copy(AppUser appUser) {
         Builder builder = new Builder();
         builder = builder.setUsername(appUser.getUsername());

@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import uk.co.bitstyle.sbab.services.dao.AppUserDao;
-import uk.co.bitstyle.sbab.services.dao.InMemoryAppUserDao;
+import uk.co.bitstyle.sbab.services.dao.user.AppUserDao;
+import uk.co.bitstyle.sbab.services.dao.user.InMemoryAppUserDao;
 
 import javax.sql.DataSource;
 

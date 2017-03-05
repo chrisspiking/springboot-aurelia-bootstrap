@@ -1,4 +1,4 @@
-package uk.co.bitstyle.sbab.services.dao;
+package uk.co.bitstyle.sbab.services.dao.user;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
