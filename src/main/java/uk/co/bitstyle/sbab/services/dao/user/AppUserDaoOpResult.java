@@ -35,6 +35,20 @@ public class AppUserDaoOpResult<T> {
         this.exception = exception;
     }
 
+    @Override
+    public String toString() {
+        return "AppUserDaoOpResult{" +
+               "success=" +
+               success +
+               ", resultObject=" +
+               resultObject +
+               ", message='" +
+               message +
+               '\'' +
+               ", exception=" +
+               exception +
+               '}';
+    }
 
     public static final class Builder<T> {
         private boolean success;

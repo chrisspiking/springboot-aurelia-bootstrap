@@ -10,7 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import uk.co.bitstyle.sbab.services.dao.user.AppUserDao;
-import uk.co.bitstyle.sbab.services.dao.user.InMemoryAppUserDao;
+import uk.co.bitstyle.sbab.services.dao.user.PostgresAppUserDao;
 
 import javax.sql.DataSource;
 
@@ -37,6 +37,6 @@ public class BaseJdbcDaoConfig {
 
     @Bean
     public AppUserDao appUserDao() {
-        return new InMemoryAppUserDao(passwordEncoder());
+        return new PostgresAppUserDao(primaryDataSource());
     }
 }

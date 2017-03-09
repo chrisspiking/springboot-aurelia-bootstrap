@@ -2,6 +2,7 @@ package uk.co.bitstyle.sbab.services.dao.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -12,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import paillard.florent.springframework.simplejdbcupdate.SimpleJdbcUpdate;
 import uk.co.bitstyle.sbab.model.AppUser;
 import uk.co.bitstyle.sbab.model.AppUser.Builder;
+import uk.co.bitstyle.sbab.util.IdProvider;
+import uk.co.bitstyle.sbab.util.IdProvider.UUIDProvider;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -57,13 +60,14 @@ public class PostgresAppUserDao implements AppUserDao {
 
     private final Object lockObject = new Object();
 
+    private IdProvider idProvider = new UUIDProvider();
+
     public PostgresAppUserDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
 
         this.appUserInserter =
                 new SimpleJdbcInsert(dataSource)
-                        .withTableName(USERS_TABLE_NAME)
-                        .usingGeneratedKeyColumns(USERS_FIELD_ID);
+                        .withTableName(USERS_TABLE_NAME);
 
         this.appUserUpdate =
                 new SimpleJdbcUpdate(dataSource)
@@ -73,6 +77,10 @@ public class PostgresAppUserDao implements AppUserDao {
         this.appUserRowMapper = new AppUserRowMapper();
     }
 
+    public void setIdProvider(IdProvider idProvider) {
+        this.idProvider = idProvider;
+    }
+
     @Override
     public Collection<AppUser> getAllUsers() {
         return jdbcTemplate.query("SELECT * FROM " + USERS_TABLE_NAME, appUserRowMapper);
@@ -80,7 +88,13 @@ public class PostgresAppUserDao implements AppUserDao {
 
     @Override
     public AppUser getUserByUsername(String username) {
-        return jdbcTemplate.queryForObject("SELECT * FROM " + USERS_TABLE_NAME, appUserRowMapper);
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM " + USERS_TABLE_NAME + " WHERE " + USERS_FIELD_USERNAME + " = ?",
+                                               appUserRowMapper,
+                                               username);
+        } catch(EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -95,10 +109,16 @@ public class PostgresAppUserDao implements AppUserDao {
     @Override
     public AppUserDaoOpResult<AppUser> createUser(AppUser userDetails) {
         synchronized (lockObject) {
-            if(userWithUsernameExists(userDetails.getUsername())) {
+            final boolean userExists = userWithUsernameExists(userDetails.getUsername());
+            if(!userExists) {
+
+                final String userId = idProvider.provideId();
                 final Map<String, Object> parameters = getAppUserStringObjectMap(userDetails);
-                final Number number = appUserInserter.executeAndReturnKey(parameters);
-                logger.info("Created new user with id {} and username {}", number.toString(), userDetails.getUsername());
+                parameters.put(USERS_FIELD_ID, userId);
+
+                appUserInserter.execute(parameters);
+                logger.info("Created new user with id {} and username {}", userId, userDetails.getUsername());
+
                 return AppUserDaoOpResult.Builder
                         .<AppUser>anAppUserDaoOpResult()
                         .withSuccess(true)
@@ -117,8 +137,10 @@ public class PostgresAppUserDao implements AppUserDao {
     @Override
     public AppUserDaoOpResult<AppUser> updateUser(AppUser userDetails) {
         synchronized (lockObject) {
-            if(!userWithUsernameExists(userDetails.getUsername())) {
+            final boolean userExists = userWithUsernameExists(userDetails.getUsername());
+            if(userExists) {
                 final Map<String, Object> parameters = getAppUserStringObjectMap(userDetails);
+
                 final Map<String, Object> keyParams = new HashMap<>();
                 keyParams.put(USERS_FIELD_USERNAME, userDetails.getUsername());
 
@@ -134,7 +156,7 @@ public class PostgresAppUserDao implements AppUserDao {
                 return AppUserDaoOpResult.Builder
                         .<AppUser>anAppUserDaoOpResult()
                         .withSuccess(false)
-                        .withMessage("User with username " + userDetails + " does not exists.")
+                        .withMessage("User with username " + userDetails + " does not exist.")
                         .build();
             }
         }
@@ -214,6 +236,5 @@ public class PostgresAppUserDao implements AppUserDao {
                           .build();
 
         }
-
     }
 }

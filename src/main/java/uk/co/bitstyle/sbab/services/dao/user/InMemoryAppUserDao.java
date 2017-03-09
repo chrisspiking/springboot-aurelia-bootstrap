@@ -3,7 +3,6 @@ package uk.co.bitstyle.sbab.services.dao.user;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import uk.co.bitstyle.sbab.model.AppUser;
 
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author chrisspiking
@@ -19,12 +17,6 @@ import java.util.Set;
 public class InMemoryAppUserDao implements AppUserDao {
 
     private Map<String, AppUser> appUserDetailsMap = new HashMap<>();
-
-    private final PasswordEncoder passwordEncoder;
-
-    public InMemoryAppUserDao(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public Collection<AppUser> getAllUsers() {
@@ -56,9 +48,10 @@ public class InMemoryAppUserDao implements AppUserDao {
                     .withSuccess(false)
                     .withMessage("Username " + appUser.getUsername() + " already exists.").build();
         }
+
         final AppUser copyOfAppUserDetails =
                 constructAppUser(appUser.getUsername(),
-                                 passwordEncoder.encode(appUser.getPassword()),
+                                 appUser.getPassword(),
                                  appUser.getFirstName(),
                                  appUser.getLastName(),
                                  appUser.getEmail(),
@@ -68,8 +61,9 @@ public class InMemoryAppUserDao implements AppUserDao {
                                  appUser.isAccountNonLocked(),
                                  appUser.isCredentialsNonExpired(),
                                  appUser.isEnabled(),
-                                 new HashSet<>(appUser.getAuthorities()));
+                                 appUser.getAuthorities());
         appUserDetailsMap.put(appUser.getEmail(), copyOfAppUserDetails);
+
         return AppUserDaoOpResult.Builder.<AppUser>anAppUserDaoOpResult().withSuccess(true).withResultObject(copyOfAppUserDetails).build();
     }
 
@@ -81,9 +75,10 @@ public class InMemoryAppUserDao implements AppUserDao {
                     .withSuccess(false)
                     .withMessage("Username " + appUser.getUsername() + " does not exist.").build();
         }
-        AppUser copyOfAppUserDetails =
+
+        final AppUser copyOfAppUserDetails =
                 constructAppUser(appUser.getUsername(),
-                                 passwordEncoder.encode(appUser.getPassword()),
+                                 appUser.getPassword(),
                                  appUser.getFirstName(),
                                  appUser.getLastName(),
                                  appUser.getEmail(),
@@ -93,7 +88,8 @@ public class InMemoryAppUserDao implements AppUserDao {
                                  appUser.isAccountNonLocked(),
                                  appUser.isCredentialsNonExpired(),
                                  appUser.isEnabled(),
-                                 new HashSet<>(appUser.getAuthorities()));
+                                 appUser.getAuthorities());
+
         appUserDetailsMap.put(appUser.getEmail(), copyOfAppUserDetails);
         return AppUserDaoOpResult.Builder.<AppUser>anAppUserDaoOpResult().withSuccess(true).withResultObject(copyOfAppUserDetails).build();
     }
@@ -118,13 +114,13 @@ public class InMemoryAppUserDao implements AppUserDao {
                                      long registrationTime, boolean receiveUpdateEmails,
                                      boolean accountNonExpired, boolean accountNonLocked,
                                      boolean credentialsNonExpired, boolean enabled,
-                                     Set<GrantedAuthority> authorities) {
+                                     Collection<GrantedAuthority> authorities) {
         AppUser.Builder builder = new AppUser.Builder();
 
         builder = builder.setUsername(username);
         builder = builder.setAccountNonExpired(accountNonExpired);
         builder = builder.setAccountNonLocked(accountNonLocked);
-        builder = builder.setAuthorities(authorities);
+        builder = builder.setAuthorities(new HashSet<>(authorities));
         builder = builder.setCredentialsNonExpired(credentialsNonExpired);
         builder = builder.setEnabled(enabled);
         builder = builder.setFirstName(firstName);
