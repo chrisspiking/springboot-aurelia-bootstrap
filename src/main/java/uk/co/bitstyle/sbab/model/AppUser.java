@@ -19,6 +19,7 @@ public class AppUser extends User {
     private final String lastName;
 
     private final long registrationTimeUtcMillis;
+
     private final boolean receiveUpdateEmails;
 
     private AppUser(String username, String password, boolean enabled, boolean accountNonExpired,
@@ -57,26 +58,31 @@ public class AppUser extends User {
         return super.getPassword() == null || super.getPassword().length() == 0;
     }
 
-    public AppUser copy(AppUser appUser) {
+    public AppUser copy() {
+        return builderOf().build();
+    }
+
+    public AppUser.Builder builderOf() {
         Builder builder = new Builder();
-        builder = builder.setUsername(appUser.getUsername());
-        builder = builder.setAccountNonExpired(appUser.isAccountNonExpired());
-        builder = builder.setAccountNonLocked(appUser.isAccountNonExpired());
-        builder = builder.setAuthorities(new LinkedList<>(appUser.getAuthorities()));
-        builder = builder.setCredentialsNonExpired(appUser.isCredentialsNonExpired());
-        builder = builder.setEnabled(appUser.isEnabled());
-        builder = builder.setFirstName(appUser.getFirstName());
-        builder = builder.setLastName(appUser.getLastName());
-        builder = builder.setEmail(appUser.getEmail());
-        builder = builder.setPassword(appUser.getPassword());
-        builder = builder.setReceiveUpdateEmails(appUser.receivesUpdateEmails());
-        builder = builder.setRegistrationTime(appUser.getRegistrationTimeUtcMillis());
-        return builder.build();
+        builder = builder.setUsername(this.getUsername());
+        builder = builder.setAccountNonExpired(this.isAccountNonExpired());
+        builder = builder.setAccountNonLocked(this.isAccountNonExpired());
+        builder = builder.setAuthorities(new LinkedList<>(this.getAuthorities()));
+        builder = builder.setCredentialsNonExpired(this.isCredentialsNonExpired());
+        builder = builder.setEnabled(this.isEnabled());
+        builder = builder.setFirstName(this.getFirstName());
+        builder = builder.setLastName(this.getLastName());
+        builder = builder.setEmail(this.getEmail());
+        builder = builder.setPassword(this.getPassword());
+        builder = builder.setReceiveUpdateEmails(this.receivesUpdateEmails());
+        builder = builder.setRegistrationTime(this.getRegistrationTimeUtcMillis());
+        return builder;
     }
 
     public static class Builder {
         private String username;
         private String password;
+
         private boolean enabled;
         private boolean accountNonExpired;
         private boolean credentialsNonExpired;

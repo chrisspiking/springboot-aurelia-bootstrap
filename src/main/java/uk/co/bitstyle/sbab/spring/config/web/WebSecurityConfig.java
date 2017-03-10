@@ -1,6 +1,7 @@
 package uk.co.bitstyle.sbab.spring.config.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,10 +11,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean
+    public AppAuthenticationProvider appAuthenticationProvider() {
+        return new AppAuthenticationProvider();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
+        http.authorizeRequests()
             .antMatchers("/s/**").authenticated()
             .antMatchers("/**").permitAll()
             .and()
@@ -22,15 +28,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .permitAll()
             .and()
             .logout()
-            .permitAll();
+            .permitAll()
+            .invalidateHttpSession(true);
 
-        http.headers().cacheControl().disable();
+        http.headers()
+            .cacheControl()
+            .disable();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+        auth.authenticationProvider(appAuthenticationProvider());
     }
 }
