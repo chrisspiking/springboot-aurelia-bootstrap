@@ -128,7 +128,7 @@ public class PostgresAppUserDao implements AppUserDao {
                 return AppUserDaoOpResult.Builder
                         .<AppUser>anAppUserDaoOpResult()
                         .withSuccess(false)
-                        .withMessage("User with username " + userDetails + " already exists.")
+                        .withMessage("User with username " + userDetails.getUsername() + " already exists.")
                         .build();
             }
         }
@@ -156,31 +156,10 @@ public class PostgresAppUserDao implements AppUserDao {
                 return AppUserDaoOpResult.Builder
                         .<AppUser>anAppUserDaoOpResult()
                         .withSuccess(false)
-                        .withMessage("User with username " + userDetails + " does not exist.")
+                        .withMessage("User with username " + userDetails.getUsername() + " does not exist.")
                         .build();
             }
         }
-    }
-
-    private Map<String, Object> getAppUserStringObjectMap(AppUser userDetails) {
-        final String authoritiesStr =
-                userDetails.getAuthorities().stream()
-                           .map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
-
-        final Map<String, Object> parameters = new HashMap<>(12);
-        parameters.put(USERS_FIELD_USERNAME, userDetails.getUsername());
-        parameters.put(USERS_FIELD_PASSWORD, userDetails.getPassword());
-        parameters.put(USERS_FIELD_AUTHORITIES, authoritiesStr);
-        parameters.put(USERS_FIELD_ENABLED, userDetails.isEnabled());
-        parameters.put(USERS_FIELD_ACCOUNT_NON_EXPIRED, userDetails.isAccountNonExpired());
-        parameters.put(USERS_FIELD_CREDENTIALS_NON_EXPIRED, userDetails.isCredentialsNonExpired());
-        parameters.put(USERS_FIELD_ACCOUNT_NON_LOCKED, userDetails.isAccountNonLocked());
-        parameters.put(USERS_FIELD_FIRST_NAME, userDetails.getFirstName());
-        parameters.put(USERS_FIELD_LAST_NAME, userDetails.getLastName());
-        parameters.put(USERS_FIELD_EMAIL, userDetails.getEmail());
-        parameters.put(USERS_FIELD_REGISTRATION_TIME, userDetails.getRegistrationTimeUtcMillis());
-        parameters.put(USERS_FIELD_RECEIVE_EMAIL_UPDATES, userDetails.receivesUpdateEmails());
-        return parameters;
     }
 
     @Override
@@ -207,6 +186,27 @@ public class PostgresAppUserDao implements AppUserDao {
     @Override
     public boolean userWithUsernameExists(String username) {
         return getUserByUsername(username) != null;
+    }
+
+    private Map<String, Object> getAppUserStringObjectMap(AppUser userDetails) {
+        final String authoritiesStr =
+                userDetails.getAuthorities().stream()
+                           .map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+
+        final Map<String, Object> parameters = new HashMap<>(12);
+        parameters.put(USERS_FIELD_USERNAME, userDetails.getUsername());
+        parameters.put(USERS_FIELD_PASSWORD, userDetails.getPassword());
+        parameters.put(USERS_FIELD_AUTHORITIES, authoritiesStr);
+        parameters.put(USERS_FIELD_ENABLED, userDetails.isEnabled());
+        parameters.put(USERS_FIELD_ACCOUNT_NON_EXPIRED, userDetails.isAccountNonExpired());
+        parameters.put(USERS_FIELD_CREDENTIALS_NON_EXPIRED, userDetails.isCredentialsNonExpired());
+        parameters.put(USERS_FIELD_ACCOUNT_NON_LOCKED, userDetails.isAccountNonLocked());
+        parameters.put(USERS_FIELD_FIRST_NAME, userDetails.getFirstName());
+        parameters.put(USERS_FIELD_LAST_NAME, userDetails.getLastName());
+        parameters.put(USERS_FIELD_EMAIL, userDetails.getEmail());
+        parameters.put(USERS_FIELD_REGISTRATION_TIME, userDetails.getRegistrationTimeUtcMillis());
+        parameters.put(USERS_FIELD_RECEIVE_EMAIL_UPDATES, userDetails.receivesUpdateEmails());
+        return parameters;
     }
 
     private static final class AppUserRowMapper implements RowMapper<AppUser> {

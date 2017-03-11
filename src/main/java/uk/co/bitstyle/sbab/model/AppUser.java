@@ -200,4 +200,24 @@ public class AppUser extends User {
         int result = super.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "AppUser{" +
+               "email='" +
+               email +
+               '\'' +
+               ", firstName='" +
+               firstName +
+               '\'' +
+               ", lastName='" +
+               lastName +
+               '\'' +
+               ", registrationTimeUtcMillis=" +
+               registrationTimeUtcMillis +
+               ", receiveUpdateEmails=" +
+               receiveUpdateEmails +
+               "} " +
+               super.toString();
+    }
 }

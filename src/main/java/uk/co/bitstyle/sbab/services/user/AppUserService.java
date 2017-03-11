@@ -9,6 +9,8 @@ public interface AppUserService {
 
     AppUser getAppUserByUserName(String username);
 
+    AppUser registerNewUser(AppUserRegistrationRequest appUserRegistrationRequest);
+
     void changePassword(String username, String plainTextPassword);
 
     boolean isPasswordValid(String username, String password);
